@@ -1,0 +1,27 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink"; 
+
+.group {
+    width: 100%; 
+} 
+
+.buttonToggle {
+    width: 50%; 
+    height: auto; 
+    aspect-ratio: 10/1.5;
+    background-color: white;
+    border-color: #3f50b5; 
+    color: #3f50b5; 
+    outline: none; 
+    font-size: 200%; 
+    font-weight: 500;
+} 
+
+.buttonToggle.clicked {
+    width: 50%; 
+    background-color: #3f50b5; 
+    color: white; 
+} 
+
+::ng-deep .mat-icon {
+    fill: #aba6a6;
+}

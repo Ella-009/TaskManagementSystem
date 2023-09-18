@@ -1,0 +1,50 @@
+.dialogTitle {
+    background-color: #3f50b5;
+    color: white; 
+} 
+
+.label {
+    color: black;
+    font-weight: 400;
+}
+
+.error {
+    color: red;
+} 
+
+.inputField {
+    display: flex;
+    align-items: center;
+} 
+
+.input {
+    width: 50%; 
+}
+
+.input:focus {
+    border: 2px solid #3f50b5;
+    outline: none;
+} 
+
+.description {
+    width: 100%; 
+    overflow-y: auto;
+} 
+
+.description:focus {
+    border: 2px solid #3f50b5;
+    outline: none;
+} 
+
+.button {
+    border: none; 
+    outline: none; 
+    background-color: white; 
+    font-size: medium;
+    font-weight: 500;
+} 
+
+::ng-deep .mdc-dialog__actions {
+    float: right;
+}
+

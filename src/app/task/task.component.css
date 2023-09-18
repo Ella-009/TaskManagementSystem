@@ -1,0 +1,61 @@
+table{
+    width: 100%
+} 
+
+.box {
+    border: 1px solid #d3d3d3; 
+} 
+
+.upperBox {
+    display: flex;
+    justify-content: space-between; 
+    background-color: #d3d3d3; 
+    padding-left: 0.5%;
+} 
+
+.tableTitle {
+    height: 100%; 
+    color: #3f50b5; 
+    font-weight: 500; 
+    text-align: center;
+} 
+
+.addTaskButton {
+    background-color: #13c59e;
+    color: white; 
+    border: none;
+} 
+
+.middleBox {
+    display: flex;
+    justify-content: space-between; 
+    padding: 0.5%;
+}
+
+.middle {
+    display: flex;
+    justify-content: center; 
+} 
+
+.smallBox {
+    display: flex;
+    align-items: center;
+}
+
+p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+select { 
+    height: auto;
+    display: inline-block; /* Ensure the <select> takes the height of its content */
+    vertical-align: middle;
+}  
+
+.logout {
+    color: #3f50b5;
+    font-size: large;
+}  
+

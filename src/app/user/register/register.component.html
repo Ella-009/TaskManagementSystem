@@ -1,0 +1,30 @@
+<form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)"> 
+  <br>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input type="text" matInput name="userName" ngModel required placeholder="Username*" [errorStateMatcher]="matcher">
+    <mat-error *ngIf="signupForm.controls['userName']?.invalid">
+      Username is <strong>required</strong>
+    </mat-error>
+  </mat-form-field> 
+  <br>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input type="password" matInput name="password" ngModel required placeholder="Password*">
+    <mat-error *ngIf="signupForm.controls['password']?.invalid">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Confirm Password</mat-label>
+    <input type="password" matInput name="confirmPwd" ngModel required placeholder="Confirm Password*" [passwordMatch]="'password'">
+    <mat-error *ngIf="signupForm.controls['confirmPwd']?.invalid">
+      Password <strong>does not match</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <button [ngClass]="{ 'submit': signupForm.valid, 'errorSubmit': signupForm.invalid }" [disabled]="signupForm.invalid ">Register</button>
+</form> 
+

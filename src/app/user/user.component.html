@@ -1,0 +1,27 @@
+<div class="container-fluid"> 
+    <div class="row">
+        <p class="systemTitle">Task Management System</p>
+    </div>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <mat-card> 
+                <mat-card-content class="justify-content-center">
+                    <div class="btn-group justify-content-center group" role="group" aria-label="Basic example" style="display: block">
+                        <button type="button" [class.clicked]="selectedValue === 'Login'" class="buttonToggle" (click)="onClickLogin()">Login</button>
+                        <button type="button" [class.clicked]="selectedValue === 'Register'" class="buttonToggle" (click)="onClickRegister()">Register</button>
+                    </div>
+
+                    <login *ngIf="selectedValue == 'Login'">
+            
+                    </login>
+                    <register *ngIf="selectedValue == 'Register'">
+            
+                    </register>
+                </mat-card-content>
+            </mat-card>    
+        </div>
+    </div>
+</div>
+

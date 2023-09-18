@@ -1,0 +1,87 @@
+
+<div mat-dialog-content> 
+    <h1 class="dialogTitle" *ngIf="quoteId === 0">Add New Quote</h1>
+    <h1 class="dialogTitle" *ngIf="quoteId !== 0">Update Task</h1>
+    <form [formGroup]="dialogForm" (ngSubmit)="onSubmit(dialogForm)"> 
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="label">Quote Id</p>
+                </div>
+                <div class="col-md-8">
+                    <input class="input" readonly=true [placeholder]="id" type="text" formControlName="id">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="label">Quote Type</p>
+                </div>
+                <div class="col-md-8 inputField">
+                    <select required formControlName="typeId">
+                        <option *ngFor="let type of quoteTypes" [value]="type.id"> {{type.name}} </option>
+                    </select>
+                    <p class="error" *ngIf="dialogForm.controls['typeId']?.invalid">
+                        *Required
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="label">Sales</p>
+                </div>
+                <div class="col-md-8 inputField">
+                    <input class="input" type="text" formControlName="sales" required>
+                    <p class="error" *ngIf="dialogForm.controls['sales']?.invalid">
+                        *Required
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="label">Premium</p>
+                </div>
+                <div class="col-md-8 inputField">
+                    <input class="input" type="text" formControlName="premium" required>
+                    <p class="error" *ngIf="dialogForm.controls['premium']?.hasError('required')">
+                        *Required
+                    </p>
+                    <p class="error" *ngIf="!dialogForm.controls['premium']?.hasError('required') && dialogForm.controls['premium']?.hasError('isPositive')">
+                        Premium must be positive number
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="label">Due Date</p>
+                </div>
+                <div class="col-md-8 inputField">
+                    <input type="date" formControlName="dueDate" required>
+                    <p class="error" *ngIf="dialogForm.controls['dueDate']?.invalid">
+                        *Required
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="label">Description</p>
+                </div>
+                <div class="col-md-8">
+                    <input class="description" type="text" formControlName="description" required>
+                    <p class="error" *ngIf="dialogForm.controls['description']?.invalid">
+                        *Required
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+</div> 
+<div mat-dialog-actions>
+    <button class="button" color="primary" (click)="onCancel()">Cancel</button>
+    <button class="button" color="primary" (click)="onSubmit(dialogForm)">Submit</button>
+</div>

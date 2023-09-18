@@ -1,0 +1,54 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.form {
+    width: 100%; 
+} 
+
+.input {
+    width: 100%; 
+    height: auto; 
+    aspect-ratio: 10/1; 
+    border-bottom: 2px solid #3f50b3;
+    border-color: #3f50b5;
+} 
+
+input {
+    border: none; 
+    outline: none;
+} 
+
+.errorSubmit { 
+    width: 15%; 
+    height: auto; 
+    aspect-ratio: 10/4;
+    background-color: #e0e0e0;
+    color: #a6a6a6; 
+    border: none;
+    outline: none;
+    border-radius: 10% 10% 10% 10%;
+    font-size: large; 
+    font-weight: 400;
+} 
+
+.submit {
+    width: 15%; 
+    height: auto; 
+    aspect-ratio: 10/4;
+    background-color: #3f50b5;
+    color: white; 
+    border: none;
+    outline: none; 
+    border-radius: 10% 10% 10% 10%;
+    font-size: large; 
+    font-weight: 400;
+} 
+
+.dialog {
+    .mat-dialog-container {
+        background-color: #3f50b3;
+    }
+} 
+
+::ng-deep .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: white;
+}

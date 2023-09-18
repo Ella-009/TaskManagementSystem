@@ -1,0 +1,36 @@
+
+<div class="container-fluid justify-content-center"> 
+    <div class="row">
+        <p class="systemTitle">Task Management System</p>
+    </div>
+    <img [src]="'../../../assets/resources/' + (quote?.id || '4') + '.png'" alt="quote">
+    <div class="row">
+        <div class="col-md-4 offset-2 propertyTitle">Quote Id</div>
+        <div class="col-md-4 propertyValue">{{ quote?.id }}</div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-2 propertyTitle">Quote Type</div>
+        <div class="col-md-4 propertyValue">{{ quote?.quoteType?.name }}</div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-2 propertyTitle">Sales Person</div>
+        <div class="col-md-4 propertyValue">{{ quote?.sales }}</div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-2 propertyTitle">Premium Amount</div>
+        <div class="col-md-4 propertyValue">{{ quote?.premium }}</div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-2 propertyTitle">Due Date</div>
+        <div class="col-md-4 propertyValue">{{ quote?.dueDate | date: "yyyy/MM/dd" }}</div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 offset-2 propertyTitle">Description</div>
+        <div class="col-md-4 propertyValue">{{ quote?.description }}</div>
+    </div>
+</div>

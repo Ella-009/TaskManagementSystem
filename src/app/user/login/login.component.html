@@ -1,0 +1,21 @@
+<form #loginForm="ngForm" class="form justify-content-center" (ngSubmit)="onSubmit(loginForm)">
+  <br>
+  <mat-form-field>
+    <input type="text" matInput name="userName" ngModel required placeholder="Username*">
+    <mat-error *ngIf="loginForm.controls['userName']?.invalid">
+      Username is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input type="password" matInput name="password" ngModel required placeholder="Password*">
+    <mat-error *ngIf="loginForm.controls['password']?.invalid">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <button [ngClass]="{ 'submit': loginForm.valid, 'errorSubmit': loginForm.invalid }" [disabled]="loginForm.invalid">Login</button>
+</form>
