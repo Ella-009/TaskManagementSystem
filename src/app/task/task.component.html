@@ -1,102 +1,91 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-11 systemTitle">
+<div class="container-fluid" style="padding: 1%;">
+    <div class="display">
+        <div class="systemTitle">
             Task Management System
         </div>
-        <div class="col-md-1">
-            <p class="logout" (click)="logout()">Log out</p>
-        </div> 
+        <div>
+            <a class="logout" (click)="logout()">Log out</a>
+        </div>
+        
     </div>
     <br>
     <br>
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="upperBox">
-                    <p class="tableTitle">Task Details</p>
-                    <button (click)="openAddDialog()" class="addTaskButton">Add Task</button>
-                </div> 
-                <div class="row">
-                    <div class="col-md-1 smallBox">
-                        <p>Show</p>
-                        <select name="selectedEntry" [(ngModel)]="selectedEntry" (change)="changeEntrySize()">
-                            <option *ngFor="let entry of entries" [value]="entry">
-                                {{entry}}
-                            </option>
-                        </select>
-                        <p>entries</p>
-                    </div> 
-                    <div class="col-md-2 offset-7 smallBox">
-                        <p>Order By: </p>
-                        <select name="selectedEntry" [(ngModel)]="selectedOrder" (change)="sortTable()">
-                            <option *ngFor="let order of orders" [value]="order">
-                                {{order}}
-                            </option>
-                        </select> 
-                        <p>Decending </p>
-                        <input type="checkbox" [(ngModel)]="decend" (change)="reverseTable()"> 
-                    </div>
-                    <div class="col-md-2 smallBox">
-                        <p>Search </p> 
-                        <input type="text" [(ngModel)]="search" placeholder="Search" (change)="searchTable()">
-                    </div>
-                </div>
-                
-                <div class="mat-evaluation-z8">
-                    <table mat-table [dataSource]="dataSource">
-                        <!--No. Column-->
-                        <ng-container matColumnDef="Id">
-                            <th mat-header-cell *matHeaderCellDef> No. </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
-                        </ng-container>
-                        <!--Quote Type Column-->
-                        <ng-container matColumnDef="QuoteType">
-                            <th mat-header-cell *matHeaderCellDef> Quote Type </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.quoteType.name }} </td>
-                        </ng-container>
-                        <!--Description Column-->
-                        <ng-container matColumnDef="Description">
-                            <th mat-header-cell *matHeaderCellDef> Description </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.description }} </td>
-                        </ng-container>
-                        <!--Sales Column-->
-                        <ng-container matColumnDef="Sales">
-                            <th mat-header-cell *matHeaderCellDef> Sales </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.sales }} </td>
-                        </ng-container>
-                        <!--Due Date Column-->
-                        <ng-container matColumnDef="DueDate">
-                            <th mat-header-cell *matHeaderCellDef> Due Date </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.dueDate | date: 'yyyy/MM/dd'}} </td>
-                        </ng-container>
-                        <!--Premium Column-->
-                        <ng-container matColumnDef="Premium">
-                            <th mat-header-cell *matHeaderCellDef> Premium </th>
-                            <td mat-cell *matCellDef="let element"> {{ element.premium | premium }} </td>
-                        </ng-container>
-                        <!--Operation Column-->
-                        <ng-container matColumnDef="Operations">
-                            <th mat-header-cell *matHeaderCellDef> Operations </th>
-                            <td mat-cell *matCellDef="let element">
-                                <mat-icon (click)="viewQuoteDetail(element.id)">visibility</mat-icon>
-                                <mat-icon (click)="openUpdateDialog(element.id)">edit</mat-icon>
-                                <mat-icon (click)="openDeleteDialog(element.id)">delete</mat-icon>
-                            </td>
-                        </ng-container>
-
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-        
-                        <mat-paginator  [hidePageSize]="true"
-                                    [pageSize]="selectedEntry"
-                                    showFirstLastButtons 
-                                    aria-label="Select page of periodic elements">
-
-                        </mat-paginator>
-                    
-                </div>
+    <div class="display" style="background-color: #d3d3d3; width: 100%;">
+        <p class="tableTitle">Task Details</p>
+        <button (click)="openAddDialog()" class="addTaskButton">Add Task</button>
+    </div> 
+    <div class="box">
+        <div class="row">
+            <div class="col-sm-1 smallBox">
+                <p>Show</p>
+                <select name="selectedEntry" [(ngModel)]="selectedEntry" (change)="changeEntrySize()">
+                    <option *ngFor="let entry of entries" [value]="entry">
+                        {{entry}}
+                    </option>
+                </select>
+                <p>entries</p>
+            </div> 
+            <div class="col-sm-2 offset-7 smallBox">
+                <p>Order By: </p>
+                <select name="selectedEntry" [(ngModel)]="selectedOrder" (change)="sortTable()">
+                    <option *ngFor="let order of orders" [value]="order">
+                        {{order}}
+                    </option>
+                </select> 
+                <p style="margin-left: 20px;">Decending </p>
+                <input type="checkbox" [(ngModel)]="decend" (change)="reverseTable()"> 
+            </div>
+            <div class="col-sm-2 smallBox">
+                <p>Search </p> 
+                <input type="text" [(ngModel)]="search" placeholder="Search" (change)="searchTable()">
             </div>
         </div>
+                
+        <table class="table">
+            <thead>
+                <tr>
+                    <th *ngFor="let column of displayedColumns" style="border-bottom: 2px solid black; color: #757575; font-weight: 500">{{column}}</th>
+                </tr>
+            </thead> 
+            <tbody>
+                <tr *ngFor="let data of tableData">
+                    <td>{{data.id}}</td> 
+                    <td>{{data.quoteType.name}}</td> 
+                    <td>{{data.description}}</td> 
+                    <td>{{data.sales}}</td> 
+                    <td>{{data.dueDate | date:'MM/dd/yyyy'}}</td> 
+                    <td>{{data.premium | premium}}</td> 
+                    <td>
+                        <mat-icon (click)="viewQuoteDetail(data.id)">visibility</mat-icon>
+                        <mat-icon (click)="openUpdateDialog(data.id)" style="margin-left: 20px;">edit</mat-icon>
+                        <mat-icon (click)="openDeleteDialog(data.id)" style="margin-left: 20px;">delete</mat-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table> 
+
+        <table>
+            <tr>
+                <td style="text-align: left;">
+                    Showing {{(currentPage - 1) * selectedEntry + 1}} to {{currentPage * selectedEntry < dataSource?.length ? currentPage * selectedEntry : dataSource?.length}} of {{dataSource?.length}}
+                </td> 
+                <td style="text-align: right;">
+                    <span (click)="toPrevious()">Previous</span> 
+                    <span class="page" *ngIf="pageCount > 1">1</span> 
+                    <span class="page" *ngIf="pageCount > 5 && currentPage > 3">...</span> 
+                    <span class="page" *ngIf="pageCount > 5 && currentPage <= 3">2</span>
+                    <span class="page" *ngIf="pageCount > 5 && currentPage <= 3">3</span> 
+                    <span class="page" *ngIf="pageCount > 2 && pageCount <= 5">2</span>
+                    <span class="page" *ngIf="pageCount > 3 && pageCount <= 5">3</span> 
+                    <span class="page" *ngIf="currentPage > 3 && currentPage < pageCount - 2">{{currentPage}}</span>
+                    <span class="page" *ngIf="pageCount > 5 && currentPage >= pageCount - 2">{{pageCount - 2}}</span>
+                    <span class="page" *ngIf="pageCount > 5 && currentPage >= pageCount - 2">{{pageCount - 1}}</span> 
+                    <span class="page" *ngIf="pageCount <= 5 && pageCount > 4">{{pageCount - 1}}</span> 
+                    <span class="page" *ngIf="pageCount > 5 && currentPage < pageCount - 2">...</span> 
+                    <span class="page">{{pageCount}}</span>
+                    <a (click)="toNext()">Next</a> 
+                </td>
+            </tr>
+        </table>  
     </div>
 </div>

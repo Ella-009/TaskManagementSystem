@@ -58,6 +58,7 @@ export class LoginComponent {
       .subscribe({
         next: (response) => {
           console.log("Successfully login!"); 
+          localStorage.setItem('token', response.token);
           this.authService.isAuthenticated = true; 
           const dialogRef = this.dialog.open(ErrorDialogComponent, {data: {message: "Successfully login!"}, width: '25%', position: { top: '2%', right: '2%'}}); 
           this.router.navigate(['/task']); 

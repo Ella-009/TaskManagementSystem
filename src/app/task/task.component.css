@@ -1,16 +1,23 @@
+.display {
+    display: flex; 
+    justify-content: space-between;
+    text-align: center;
+}
+
 table{
     width: 100%
 } 
 
 .box {
     border: 1px solid #d3d3d3; 
+    padding: 0.5%;
 } 
 
 .upperBox {
     display: flex;
     justify-content: space-between; 
     background-color: #d3d3d3; 
-    padding-left: 0.5%;
+    width: 100%;
 } 
 
 .tableTitle {
@@ -59,3 +66,35 @@ select {
     font-size: large;
 }  
 
+.page {
+    padding: 1%; 
+    margin: 1%; 
+    cursor: pointer;
+}
+
+.pageActive {
+    background-color: #dcdcdc;
+    border-radius: 10% 10% 10% 10%;
+}
+
+.page:active {
+    background-color: #dcdcdc;
+    border-radius: 10% 10% 10% 10%;
+} 
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+} 
+
+.paginator {
+    display: flex; 
+    justify-content: space-between; 
+    text-align: right;
+} 
+
+.pages {
+    display: flex; 
+    justify-content: space-between; 
+    width: 80%;
+}

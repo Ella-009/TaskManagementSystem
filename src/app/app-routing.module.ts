@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'user', component: UserComponent }, 
   { path: 'user/login', component: LoginComponent }, 
   { path: 'user/register', component: RegisterComponent }, 
-  { path: 'task', component: TaskComponent, canActivate: [AuthGard] },  
+  { path: 'task', component: TaskComponent, },  
   { path: 'task/task-dialog', component: TaskDetailComponent, canActivate: [AuthGard] }, 
   { path: 'task/delete-task/:id', component: DeleteTaskComponent, canActivate: [AuthGard] }, 
   { path: 'task/task-detail/:id', component: TaskDetailComponent, canActivate: [AuthGard] }, 

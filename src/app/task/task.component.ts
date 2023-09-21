@@ -22,17 +22,26 @@ import { DeleteTaskComponent } from './delete-task/delete-task.component';
   styleUrls: ['./task.component.css']
 })
 export class TaskComponent implements OnInit{
-  displayedColumns: string[] = ['Id', 'QuoteType', 'Description', 'Sales', 'DueDate', 'Premium', 'Operations']; 
+  displayedColumns: string[] = ['Id', 'QuoteType', 'Description', 'Sales', 'DueDate', 'Premium', '']; 
+
   entries: number[] = [5, 10, 15, 20, 25]; 
   selectedEntry: number = 5; 
   orders: string[] = ['id', 'typeId', 'description', 'dueDate', 'premium', 'sales']; 
   selectedOrder: string = 'id'; 
   decend: boolean = false; 
   search: string = ""; 
-  paginatorVisible: boolean = true;
+  
+  //related to paginator
+  currentPage: number = 1; 
+  pages: number[] = []; 
+  pageCount: number = 0;
+  pageIndex: number = 0; 
 
-  dataSource: MatTableDataSource<any> = new MatTableDataSource<any>(); 
+  tableData: any;
+  dataSource: any; 
+
   private dataSubject = new Subject<any[]>(); 
+  private tableSubject = new Subject<any[]>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -43,16 +52,15 @@ export class TaskComponent implements OnInit{
     .subscribe({
       next: (response) => {
         console.log("Successfully get all quotes!"); 
-        this.dataSource.data = response; 
-        //debugger; 
-        this.paginator.pageSize = this.selectedEntry; 
-        this.dataSource.paginator = this.paginator;   
-        this.dataSource.filterPredicate = (data: any, filter: string) => {
-          const dataInfo = JSON.stringify(data); 
-          return dataInfo.toLowerCase().includes(filter); 
-        };
+        this.dataSource = response; 
+        this.getTableData(); 
+        this.getPages(); 
+        
         this.dataSubject.subscribe(data => {
-          this.dataSource.data = data;
+          this.dataSource = data; 
+        }) 
+        this.tableSubject.subscribe(data => {
+          this.tableData = data; 
         })
           //debugger;
       },
@@ -61,7 +69,26 @@ export class TaskComponent implements OnInit{
         this.router.navigate(['/notfound']); 
       }
     }); 
+  }  
+
+  getTableData() {
+    this.tableData = this.dataSource.slice((this.currentPage - 1) * this.selectedEntry, this.currentPage * this.selectedEntry); 
+    this.tableSubject.next(this.tableData); 
   } 
+
+  getPages() { 
+    this.currentPage = 1;
+    this.pageCount = Math.ceil( this.dataSource.length / this.selectedEntry ); 
+    this.pages = [];
+    for (let i = 1; i <= this.pageCount; i++) {
+      this.pages.push(i); 
+    }
+  } 
+
+  setCurrentPage() {
+    this.getTableData(); 
+    this.tableSubject.next(this.tableData); 
+  }
 
   openAddDialog(): void {
     const dialogRef = this.dialog.open(TaskDialogComponent, {data: {id: 0}, width: '70%'}); 
@@ -72,8 +99,10 @@ export class TaskComponent implements OnInit{
         .subscribe({
           next: (response) => {
             console.log("Close add dialog!" + response); 
-            this.dataSource.data.push(response); 
-            this.dataSubject.next(this.dataSource.data); 
+            this.dataSource.push(response); 
+            this.dataSubject.next(this.dataSource); 
+            this.getPages(); 
+            this.getTableData(); 
             //debugger;
           },
           error: (error) => {
@@ -81,9 +110,6 @@ export class TaskComponent implements OnInit{
             this.router.navigate(['/notfound']); 
           }
         });
-        
-        //debugger; 
-        //this.router.navigate(['/task']);
       },
     });
   } 
@@ -121,13 +147,14 @@ export class TaskComponent implements OnInit{
 
   updateDataSource(id: number, quote: any) { 
     //debugger; 
-    this.dataSource.data.forEach((item, index) => {
+    this.dataSource.forEach((item: any, index: any) => {
       if (item.id == id) {
-        this.dataSource.data[index] = quote; 
+        this.dataSource[index] = quote; 
         //debugger;
       }
     });
-    this.dataSubject.next(this.dataSource.data); 
+    this.dataSubject.next(this.dataSource); 
+    this.getTableData(); 
     //debugger;
   } 
 
@@ -135,8 +162,10 @@ export class TaskComponent implements OnInit{
     this.dataService.getAllQuotes()
     .subscribe({
       next: (response) => {
-        this.dataSource.data = response; 
-        this.dataSubject.next(this.dataSource.data); 
+        this.dataSource = response; 
+        this.dataSubject.next(this.dataSource); 
+        this.getPages();
+        this.getTableData(); 
       },
       error: (error) => {
         console.log("error: " + error); 
@@ -146,13 +175,13 @@ export class TaskComponent implements OnInit{
   }
 
   viewQuoteDetail(id: number) { 
-    debugger; 
+    //debugger; 
     this.router.navigate(['/task/task-detail', id]); 
   }
 
   sortTable() { 
     if (this.decend) {
-      this.dataSource.data.sort((a, b) => {
+      this.dataSource.data.sort((a: any, b: any) => {
         if (a[this.selectedOrder] < b[this.selectedOrder]) {
           return 1; 
         } else if (a[this.selectedOrder] > b[this.selectedOrder]) {
@@ -162,7 +191,7 @@ export class TaskComponent implements OnInit{
         }
       }); 
     } else {
-      this.dataSource.data.sort((a, b) => {
+      this.dataSource.data.sort((a: any, b: any) => {
         if (a[this.selectedOrder] < b[this.selectedOrder]) {
           return -1; 
         } else if (a[this.selectedOrder] > b[this.selectedOrder]) {
@@ -172,29 +201,49 @@ export class TaskComponent implements OnInit{
         }
       }); 
     }
-    this.dataSubject.next(this.dataSource.data);
+    this.dataSubject.next(this.dataSource);
+    this.getTableData(); 
   }
 
   reverseTable() { 
     this.dataSource.data.reverse(); 
-    this.dataSubject.next(this.dataSource.data);
+    this.dataSubject.next(this.dataSource); 
+    this.getTableData(); 
   }
 
   searchTable() { 
-    this.dataSource.filter = this.search.trim().toLowerCase();
+    //this.dataSource.filter = this.search.trim().toLowerCase();
   } 
 
   logout() {
     this.authService.isAuthenticated = false; 
     this.router.navigate(['/user']); 
+    localStorage.removeItem('token');
   } 
 
-  changeEntrySize() {
-    this.paginator.pageSize = this.selectedEntry; 
-    this.paginator.pageIndex = 0; 
+  changeEntrySize() { 
+    this.getPages(); 
+    this.getTableData(); 
+    console.log("pages: " + this.pages); 
+    console.log("current: " + this.currentPage); 
+  } 
+
+  toPrevious() {
+    if (this.currentPage == 1) {
+      return; 
+    } else {
+      this.currentPage--; 
+    } 
+    this.getTableData();
+  } 
+
+  toNext() {
+    if (this.currentPage == this.pages[this.pages.length - 1]) {
+      return; 
+    } else {
+      this.currentPage++;
+    } 
+    this.getTableData(); 
     //debugger; 
-    this.cdr.detectChanges(); 
-    //this.cdr.markForCheck();
-    console.log(this.paginator.pageSize)
   }
 }
